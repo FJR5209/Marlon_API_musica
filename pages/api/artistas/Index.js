@@ -1,6 +1,8 @@
-// pages/api/artistas/index.js
-import Artista from '../../../Models/Artista';
-import syncDatabase from '../../../Models'; // Certifique-se de que o caminho esteja correto e use a mesma capitalização
+import syncDatabase from '../../../models/Index'; // Importa a função syncDatabase do arquivo index.js dentro de models
+
+import Artista from '../../../models/Artista'; // Importa o modelo Artista
+// import Album from '../../../models/Album'; // Importa o modelo Album
+// import Musica from '../../../models/Musica'; // Importa o modelo Musica
 
 export default async function handler(req, res) {
   await syncDatabase(); // Sincroniza o banco de dados
