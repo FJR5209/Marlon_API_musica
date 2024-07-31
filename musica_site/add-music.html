@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Adicionar Música</title>
+</head>
+<body>
+<h1>Adicionar Música</h1>
+<form id="add-music-form">
+  <label for="title">Título:</label>
+  <input type="text" id="title" name="title" required>
+  <br>
+  <label for="artist">Artista:</label>
+  <input type="text" id="artist" name="artist" required>
+  <br>
+  <label for="album">Álbum:</label>
+  <input type="text" id="album" name="album" required>
+  <br>
+  <label for="genre">Gênero:</label>
+  <input type="text" id="genre" name="genre" required>
+  <br>
+  <label for="releaseDate">Data de Lançamento:</label>
+  <input type="date" id="releaseDate" name="releaseDate" required>
+  <br>
+  <button type="submit">Adicionar Música</button>
+</form>
+
+<script>
+  document.getElementById('add-music-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+    const data = {
+      title: formData.get('title'),
+      artist: formData.get('artist'),
+      album: formData.get('album'),
+      genre: formData.get('genre'),
+      releaseDate: formData.get('releaseDate'),
+    };
+
+    fetch('/api/music', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      alert('Música adicionada com sucesso!');
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Erro ao adicionar música.');
+    });
+  });
+</script>
+</body>
+</html>

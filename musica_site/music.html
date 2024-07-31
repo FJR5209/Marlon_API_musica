@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Lista de Músicas</title>
+</head>
+<body>
+  <h1>Lista de Músicas</h1>
+  <ul id="music-list"></ul>
+
+  <script>
+    // Função para carregar e exibir músicas
+    async function loadMusics() {
+      try {
+        const response = await fetch('/api/music');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const musics = await response.json();
+        
+        const musicList = document.getElementById('music-list');
+        musicList.innerHTML = musics.map(music => `
+          <li>
+            <strong>Título:</strong> ${music.title} <br>
+            <strong>Artista:</strong> ${music.artist} <br>
+            <strong>Álbum:</strong> ${music.album} <br>
+            <strong>Gênero:</strong> ${music.genre} <br>
+            <strong>Data de Lançamento:</strong> ${new Date(music.releaseDate).toLocaleDateString()} <br>
+          </li>
+        `).join('');
+      } catch (error) {
+        console.error('Error fetching music:', error);
+      }
+    }
+
+    // Carregar músicas ao carregar a página
+    window.onload = loadMusics;
+  </script>
+</body>
+</html>
