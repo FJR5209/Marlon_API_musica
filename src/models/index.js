@@ -1,40 +1,24 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: './database.sqlite'
+// src/index.js
+const express = require('express');
+const connectDB = require('./db');
+const app = express();
+const port = 3000;
+
+const musicRoutes = require('./routes/music');
+const artistRoutes = require('./routes/artist');
+const albumRoutes = require('./routes/album');
+
+connectDB(); // Conectar ao MongoDB
+
+app.use(express.json());
+app.use('/api/musics', musicRoutes);
+app.use('/api/artists', artistRoutes);
+app.use('/api/albums', albumRoutes);
+
+app.get('/', (req, res) => {
+  res.send('Hello, world!');
 });
 
-const Artist = sequelize.define('Artist', {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false
-  }
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
-
-const Album = sequelize.define('Album', {
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false
-  }
-});
-
-const Music = sequelize.define('Music', {
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  year: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-});
-
-Artist.hasMany(Album);
-Album.belongsTo(Artist);
-
-Album.hasMany(Music);
-Music.belongsTo(Album);
-
-sequelize.sync();
-
-module.exports = { Artist, Album, Music, sequelize };

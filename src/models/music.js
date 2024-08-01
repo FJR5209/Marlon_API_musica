@@ -1,40 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const { Music } = require('../models');
+const mongoose = require('mongoose');
 
-// Adiciona uma nova música
-router.post('/', async (req, res) => {
-  try {
-    const { title, artist, album, genre, releaseDate } = req.body;
-    // Crie a música no banco de dados
-    const music = await Music.create({
-      title,
-      artist,
-      album,
-      genre,
-      releaseDate
-    });
-    // Retorne a música criada com um status de sucesso
-    res.status(201).json(music);
-  } catch (error) {
-    console.error('Error adding music:', error);
-    // Retorne um erro se algo der errado
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+const musicSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  artist: { type: String, required: true },
+  album: { type: String, required: true },
+  genre: { type: String, required: true },
+  releaseDate: { type: Date, required: true }
 });
 
-// Lista todas as músicas
-router.get('/', async (req, res) => {
-  try {
-    // Encontre todas as músicas no banco de dados
-    const musics = await Music.findAll();
-    // Retorne a lista de músicas com um status de sucesso
-    res.status(200).json(musics);
-  } catch (error) {
-    console.error('Error fetching musics:', error);
-    // Retorne um erro se algo der errado
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+const Music = mongoose.model('Music', musicSchema);
 
-module.exports = router;
+module.exports = Music;
