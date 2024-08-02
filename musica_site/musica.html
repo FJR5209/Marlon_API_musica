@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Músicas</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Músicas</h1>
+    <table id="music-table">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Artista</th>
+                <th>Letra</th>
+                <th>Álbum</th>
+                <th>Gênero</th>
+                <th>Data de Lançamento</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Os dados serão inseridos aqui -->
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/letras');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const letras = await response.json();
+                const tableBody = document.querySelector('#music-table tbody');
+                tableBody.innerHTML = ''; // Limpa o corpo da tabela
+
+                letras.forEach(letra => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${letra.title}</td>
+                        <td>${letra.artist}</td>
+                        <td>${letra.lyrics}</td>
+                        <td>${letra.album}</td>
+                        <td>${letra.genre}</td>
+                        <td>${new Date(letra.releaseDate).toLocaleDateString()}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Erro ao buscar músicas:', error);
+            }
+        });
+    </script>
+</body>
+</html>

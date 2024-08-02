@@ -3,49 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Music</title>
+    <title>Add Letra</title>
 </head>
 <body>
-    <h1>Add New Music</h1>
-    <form id="add-music-form">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
-        <br>
-        <label for="artist">Artist:</label>
-        <input type="text" id="artist" name="artist" required>
-        <br>
-        <label for="album">Album:</label>
+    <h1>Adicionar Nova Letra</h1>
+    <form id="add-letra-form">
+        <label for="artista">Artista:</label>
+        <input type="text" id="artista" name="artista" required>
+        <label for="musica">Música:</label>
+        <input type="text" id="musica" name="musica" required>
+        <label for="letra">Letra:</label>
+        <textarea id="letra" name="letra" required></textarea>
+        <label for="album">Álbum:</label>
         <input type="text" id="album" name="album" required>
-        <br>
-        <label for="genre">Genre:</label>
-        <input type="text" id="genre" name="genre" required>
-        <br>
-        <label for="releaseDate">Release Date:</label>
-        <input type="date" id="releaseDate" name="releaseDate" required>
-        <br>
-        <button type="submit">Add Music</button>
+        <button type="submit">Adicionar Letra</button>
     </form>
     <script>
-        document.getElementById('add-music-form').addEventListener('submit', async (e) => {
+        document.getElementById('add-letra-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const title = document.getElementById('title').value;
-            const artist = document.getElementById('artist').value;
+            const artista = document.getElementById('artista').value;
+            const musica = document.getElementById('musica').value;
+            const letra = document.getElementById('letra').value;
             const album = document.getElementById('album').value;
-            const genre = document.getElementById('genre').value;
-            const releaseDate = document.getElementById('releaseDate').value;
 
-            const response = await fetch('http://localhost:3000/api/music', {
+            const response = await fetch('http://localhost:3000/api/letras', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ title, artist, album, genre, releaseDate })
+                body: JSON.stringify({ artista, musica, letra, album })
             });
 
             if (response.ok) {
-                alert('Music added successfully!');
+                alert('Letra adicionada com sucesso!');
+                window.location.href = '/'; // Redirecionar para a página inicial
             } else {
-                alert('Failed to add music.');
+                alert('Falha ao adicionar a letra.');
             }
         });
     </script>

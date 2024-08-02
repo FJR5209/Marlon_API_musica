@@ -1,34 +1,27 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const path = require('path');
-const musicRoutes = require('./routes/music');
-
+const connectDB = require('./db');
 const app = express();
 const port = 3000;
 
-// Middleware
-app.use(bodyParser.json());
-app.use(cors());
+const musicRoutes = require('./routes/musica');
+const artistRoutes = require('./routes/artist');
+const letraRoutes = require('./routes/letra');
+const albumRoutes = require('./routes/album');
 
-// Servir arquivos estáticos do diretório 'musica_site'
-app.use(express.static(path.join(__dirname, '../musica_site')));
+// Conectar ao MongoDB
+connectDB();
 
-// MongoDB connection
-mongoose.connect('mongodb+srv://juniorfredson5209:IfacaMarlonN1@apimarlon.5civmep.mongodb.net/', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+// Middleware para servir arquivos estáticos
+app.use(express.static('src/public'));
 
-// Rotas da API
-app.use('/api/music', musicRoutes);
+app.use(express.json());
+app.use('/api/musics', musicRoutes);
+app.use('/api/artists', artistRoutes);
+app.use('/api/letras', letraRoutes);
+app.use('/api/albums', albumRoutes);
 
-// Rota para a página inicial
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../musica_site', 'index.html'));
+  res.send('Hello, world!');
 });
 
 app.listen(port, () => {
