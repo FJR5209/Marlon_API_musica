@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artistas e Músicas</title>
+    <link rel="icon" href="pngwing.com (1).png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Artistas e Músicas</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="albums.html">Álbuns</a>
+            <a href="musica.html">Músicas</a>
+            <a href="add-music.html">Adicionar Música</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Artistas</h2>
+        <table id="artist-table">
+            <thead>
+                <tr>
+                    <th>Artistas</th>
+                    <th>Músicas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Os dados dos artistas e músicas serão inseridos aqui -->
+            </tbody>
+        </table>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Buscar todos os dados das letras
+                const response = await fetch('http://localhost:3000/api/letras');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const letras = await response.json();
+
+                // Organizar dados por artista
+                const artistMap = {};
+                letras.forEach(letra => {
+                    if (!artistMap[letra.artist]) {
+                        artistMap[letra.artist] = [];
+                    }
+                    artistMap[letra.artist].push(letra.title);
+                });
+
+                // Criar a tabela
+                const tableBody = document.querySelector('#artist-table tbody');
+                tableBody.innerHTML = ''; // Limpa o corpo da tabela
+
+                for (const artist in artistMap) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${artist}</td>
+                        <td>${artistMap[artist].join(', ')}</td>
+                    `;
+                    tableBody.appendChild(row);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+            }
+        });
+    </script>
+</body>
+</html>

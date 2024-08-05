@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Álbuns</title>
+    <link rel="icon" href="pngwing.com (1).png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Álbuns</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="musica.html">Músicas</a>
+            <a href="artists.html">Artistas</a>
+            <a href="add-music.html">Adicionar Música</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Álbuns</h2>
+        <table id="album-table">
+            <thead>
+                <tr>
+                    <th>Artista</th>
+                    <th>Álbum</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Os dados serão inseridos aqui -->
+            </tbody>
+        </table>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/letras');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const letras = await response.json();
+                const tableBody = document.querySelector('#album-table tbody');
+                tableBody.innerHTML = ''; // Limpa o corpo da tabela
+
+                // Cria um conjunto para armazenar álbuns únicos
+                const albumsSet = new Set();
+
+                letras.forEach(letra => {
+                    // Adiciona o álbum ao conjunto se ainda não estiver lá
+                    if (!albumsSet.has(letra.album)) {
+                        albumsSet.add(letra.album);
+                        
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${letra.artist || 'N/A'}</td>
+                            <td>${letra.album || 'N/A'}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    }
+                });
+            } catch (error) {
+                console.error('Erro ao buscar álbuns:', error);
+            }
+        });
+    </script>
+</body>
+</html>

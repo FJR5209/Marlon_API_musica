@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');  // Importar o módulo 'path'
 const connectDB = require('./db');
 const app = express();
 const port = 3000;
@@ -12,16 +13,18 @@ const albumRoutes = require('./routes/album');
 connectDB();
 
 // Middleware para servir arquivos estáticos
-app.use(express.static('src/public'));
+app.use(express.static(path.join(__dirname, 'musica_site')));
 
+// Middleware para JSON
 app.use(express.json());
 app.use('/api/musics', musicRoutes);
 app.use('/api/artists', artistRoutes);
 app.use('/api/letras', letraRoutes);
-app.use('/api/albums', albumRoutes);
+app.use('/api/album', albumRoutes);
 
+// Rota para servir o index.html
 app.get('/', (req, res) => {
-  res.send('Hello, world!');
+  res.sendFile(path.join(__dirname, 'musica_site', 'index.html'));
 });
 
 app.listen(port, () => {

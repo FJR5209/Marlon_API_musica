@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Letra</title>
+    <link rel="icon" href="pngwing.com (1).png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        #success-buttons, #error-buttons {
+            display: none;
+            margin-top: 20px;
+        }
+        #success-buttons button, #error-buttons button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Adicionar Nova Letra</h1>
+    <form id="add-letra-form">
+        <label for="artist">Artista:</label>
+        <input type="text" id="artist" name="artist" required>
+        <label for="title">Título:</label>
+        <input type="text" id="title" name="title" required>
+        <label for="letra">Letra:</label>
+        <textarea id="letra" name="letra" required></textarea>
+        <label for="album">Álbum:</label>
+        <input type="text" id="album" name="album" required>
+        <label for="genre">Gênero:</label>
+        <input type="text" id="genre" name="genre">
+        <label for="releaseDate">Data de Lançamento:</label>
+        <input type="date" id="releaseDate" name="releaseDate">
+        <button type="submit" id="submit-button">Adicionar Letra</button>
+    </form>
+
+    <div id="success-buttons">
+        <button onclick="window.location.href='add-music.html'">Cadastrar Nova Música</button>
+        <button onclick="window.location.href='/'">Voltar para a Página Inicial</button>
+    </div>
+
+    <div id="error-buttons">
+        <button onclick="document.getElementById('add-letra-form').reset(); document.getElementById('submit-button').click();">Tentar Novamente</button>
+        <button onclick="window.location.href='/'">Voltar para a Página Inicial</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.js"></script>
+    <script>
+        document.getElementById('add-letra-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const artist = document.getElementById('artist').value;
+            const title = document.getElementById('title').value;
+            const letra = document.getElementById('letra').value;
+            const album = document.getElementById('album').value;
+            const genre = document.getElementById('genre').value;
+            const releaseDate = document.getElementById('releaseDate').value;
+
+            const response = await fetch('http://localhost:3000/api/letras', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ artist, title, letra, album, genre, releaseDate })
+            });
+
+            const successMessage = 'Letra adicionada com sucesso!';
+            const errorMessage = 'Falha ao adicionar a letra.';
+
+            if (response.ok) {
+                Toastify({
+                    text: successMessage,
+                    duration: 3000,
+                    gravity: 'bottom',
+                    position: 'right',
+                    backgroundColor: '#4CAF50',
+                }).showToast();
+                
+                // Hide the form and show success buttons
+                document.getElementById('add-letra-form').style.display = 'none';
+                document.getElementById('success-buttons').style.display = 'block';
+            } else {
+                Toastify({
+                    text: errorMessage,
+                    duration: 3000,
+                    gravity: 'bottom',
+                    position: 'right',
+                    backgroundColor: '#f44336',
+                }).showToast();
+                
+                // Hide the form and show error buttons
+                document.getElementById('add-letra-form').style.display = 'none';
+                document.getElementById('error-buttons').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
