@@ -88,7 +88,8 @@ form label {
 }
 
 form input[type="text"],
-form textarea {
+form textarea,
+form input[type="date"] {
     width: 100%;
     padding: 8px;
     margin-bottom: 16px;
@@ -110,37 +111,6 @@ form button:hover {
     background-color: #0056b3;
 }
 
-/* Estilos para os botões de sucesso e erro */
-#success-buttons, #error-buttons {
-    display: none;
-    margin-top: 20px;
-}
-
-#success-buttons button, #error-buttons button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-right: 10px;
-}
-
-#success-buttons button:hover, #error-buttons button:hover {
-    background-color: #0056b3;
-}
-
-#success-buttons {
-    display: flex;
-    justify-content: center;
-}
-
-#error-buttons {
-    display: flex;
-    justify-content: center;
-}
-
 /* Estilos para o conteúdo principal */
 main {
     max-width: 1200px;
@@ -153,4 +123,65 @@ main {
         display: block;
         margin-bottom: 10px;
     }
+}
+
+/* Customizações baseadas nos códigos fornecidos */
+
+/* Spotlights Section */
+.spotlights > section > .image:before {
+    opacity: 0 !important;
+}
+
+.spotlights > section > .content > .inner {
+    -moz-transform: none !important;
+    -webkit-transform: none !important;
+    -ms-transform: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* Wrapper */
+.wrapper > .inner {
+    opacity: 1 !important;
+    -moz-transform: none !important;
+    -webkit-transform: none !important;
+    -ms-transform: none !important;
+    transform: none !important;
+}
+
+/* Sidebar */
+#sidebar > .inner {
+    opacity: 1 !important;
+}
+
+#sidebar nav > ul > li {
+    -moz-transform: none !important;
+    -webkit-transform: none !important;
+    -ms-transform: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* Toastify Customizations */
+.toast-success {
+    background-color: #28a745 !important;
+}
+
+.toast-error {
+    background-color: #dc3545 !important;
+}
+
+.toast button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.toast button:hover {
+    background-color: #0056b3;
 }

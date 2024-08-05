@@ -6,7 +6,7 @@ const port = 3000;
 
 const musicRoutes = require('./routes/musica');
 const artistRoutes = require('./routes/artist');
-const letraRoutes = require('./routes/letra');
+const letraRoutes = require('./routes/letras');  // Ajuste aqui para corresponder ao nome correto do arquivo de rotas
 const albumRoutes = require('./routes/album');
 
 // Conectar ao MongoDB

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vagalume API Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="fetchLyrics.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Lyrics API Example</h1>
+    <div style="width: 500px">
+        <p>Este exemplo usa a <a href="http://api.vagalume.com.br/docs/letras/">API de letras do Vagalume</a>. Insira o nome do artista e da música para buscar a letra.</p>
+        <div>
+            <label for="artist">Artista:</label>
+            <input type="text" id="artist" name="artist">
+            <br>
+            <label for="title">Música:</label>
+            <input type="text" id="title" name="title">
+            <br>
+            <button id="search">Buscar Letra</button>
+        </div>
+        <div id="letra">
+            <pre class="text">A letra da música aparecerá aqui...</pre>
+        </div>
+    </div>
+</body>
+</html>
