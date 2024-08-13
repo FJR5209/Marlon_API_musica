@@ -3,32 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Finder</title>
+    <title>Detalhes da Música</title>
     <link rel="icon" href="pngwing.com (1).png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Music Finder</h1>
+        <h1>Detalhes da Música</h1>
         <nav>
             <a href="albums.html">Álbuns</a>
             <a href="musica.html">Músicas</a>
             <a href="artists.html">Artistas</a>
             <a href="add-music.html">Adicionar Música</a>
-            <a href="api_vagalume.html">Api Vagalume</a>
+            <a href="api_vagalume.html">Api vagalume</a>
         </nav>
     </header>
     <main>
-        <h2>Bem-vindo ao Music Finder!</h2>
-        <input type="text" id="searchInput" placeholder="Digite sua pesquisa">
-        <select id="searchType">
-            <option value="artist">Artista</option>
-            <option value="title">Título</option>
-            <option value="album">Álbum</option>
-        </select>
-        <button id="searchButton">Buscar</button>
-        <div id="result"></div>
+        <h2 id="musicTitle"></h2>
+        <p><strong>Artista:</strong> <span id="musicArtist"></span></p>
+        <p><strong>Álbum:</strong> <span id="musicAlbum"></span></p>
+        <p><strong>Letra:</strong></p>
+        <pre id="musicLyrics"></pre>
     </main>
-    <script src="script.js"></script>
+    <script src="music-details.js"></script>
 </body>
 </html>
