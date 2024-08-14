@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: Musica API
+  description: API para gerenciar músicas, artistas, álbuns e letras
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api
+    description: Servidor local
+
+paths:
+  /musics:
+    get:
+      summary: Lista todas as músicas
+      responses:
+        '200':
+          description: Lista de músicas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Musica'
+    post:
+      summary: Adiciona uma nova música
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Musica'
+      responses:
+        '201':
+          description: Música criada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Musica'
+
+components:
+  schemas:
+    Musica:
+      type: object
+      properties:
+        title:
+          type: string
+        artist:
+          type: string
+        letra:
+          type: string
+        album:
+          type: string
+        genre:
+          type: string
+        releaseDate:
+          type: string
+          format: date
